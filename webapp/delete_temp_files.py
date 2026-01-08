@@ -9,7 +9,8 @@ from config import Config
 from custom_logger import CustomLogger
 from custom_decorators import timeit
 
-logger = CustomLogger(logger_log_level=Config.CLI_LOG_LEVEL,
+logger = CustomLogger(logger_name="DeleteTempFiles",
+                      logger_log_level=Config.CLI_LOG_LEVEL,
                       file_handler_log_level=Config.FILE_LOG_LEVEL,
                       log_file_name=fr"{Config.ROOT_PATH}/logs/delete_temp_files.log"
                       ).create_logger()
