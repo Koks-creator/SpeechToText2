@@ -38,7 +38,7 @@ def setup_logging(app: Flask) -> None:
 def create_app() -> Tuple[Flask]:
     """Initialize and configure the Flask application"""
     app = Flask(
-        "OcrWebApp",
+        "STTWebApp",
         template_folder=TEMPLATE_DIR,
         static_folder=STATIC_DIR
     )
@@ -52,17 +52,14 @@ def create_app() -> Tuple[Flask]:
     return app
 
 app = create_app()
-api_connected = True
 try:
     app.logger.info(f"Checking api connection: http://{Config.API_HOST}:{Config.API_PORT}/health")
     req = requests.get(f"http://{Config.API_HOST}:{Config.API_PORT}/health")
     if req.json()["status"] != "all green":
-        api_connected = False
         app.logger.error(f"Error when checking api status: {req.json()['status']}")
     else:
         app.logger.info("Connected to api")
 except Exception as e:
-    api_connected = False
     app.logger.error(f"Error when connecting to the api: {e}")
 
 os.makedirs(Config.WEB_APP_TEMP_UPLOADS_FOLDER, exist_ok=True)
