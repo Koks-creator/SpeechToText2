@@ -1013,3 +1013,28 @@ textarea:focus {
         transform: none;
     }
 }
+
+
+/* ============ Results Header ============ */
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.results-header h2 {
+    margin: 0;
+}
+
+.results-header .btn {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+}
+
+.btn.downloaded {
+    background: var(--success);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
