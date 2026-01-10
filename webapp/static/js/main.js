@@ -268,6 +268,58 @@ function initCopyButtons() {
     });
 }
 
+// ============ Download JSON ============
+function initDownloadJson() {
+    const downloadBtn = document.getElementById('downloadJsonBtn');
+    const resultsDataEl = document.getElementById('resultsData');
+    
+    if (!downloadBtn || !resultsDataEl) return;
+    
+    downloadBtn.addEventListener('click', () => {
+        try {
+            const results = JSON.parse(resultsDataEl.textContent);
+            
+            // Formatuj dane
+            const exportData = {
+                exported_at: new Date().toISOString(),
+                total_files: results.length,
+                transcriptions: results.map((item, index) => ({
+                    index: index + 1,
+                    filename: item.filename,
+                    transcription: item.transcription
+                }))
+            };
+            
+            // Utwórz blob i pobierz
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `transcriptions_${Date.now()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            // Feedback wizualny
+            const originalText = downloadBtn.querySelector('span').textContent;
+            downloadBtn.querySelector('span').textContent = 'Downloaded!';
+            downloadBtn.classList.add('downloaded');
+            
+            setTimeout(() => {
+                downloadBtn.querySelector('span').textContent = originalText;
+                downloadBtn.classList.remove('downloaded');
+            }, 2000);
+            
+        } catch (err) {
+            console.error('Failed to download JSON:', err);
+            alert('Failed to generate JSON file.');
+        }
+    });
+}
+
 // ============ Initialize ============
 initAudioPlayers();
 initCopyButtons();
+initDownloadJson();
