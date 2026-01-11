@@ -51,11 +51,9 @@ class SpeechToText:
                 audio, sample_rate = sf.read(BytesIO(audio_input))
             elif isinstance(audio_input, BytesIO):
                 audio, sample_rate = sf.read(audio_input)
-                print(sample_rate)
             else:
                 # str - ścieżka do pliku
                 audio, sample_rate = sf.read(audio_input)
-                print(sample_rate)
         audio = audio.astype(np.float32)
         
         # Calculate spectrogram
@@ -146,4 +144,5 @@ if __name__ == "__main__":
     # print(f"Transkrypcja: {audio_file}")
     
     text = speech_to_text.transcribe([audio_file, audio_file2, audio_file3, audio_file4, audio_file5])
+
     print(f"Wynik: {text}")
