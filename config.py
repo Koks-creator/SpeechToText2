@@ -16,7 +16,7 @@ class Config:
     FRAME_LENGTH: int = 256
     FRAME_STEP: int = 160
     FFT_LENGTH: int = 384
-    MODEL_FOLDER: str = f"{MODELS_FOLDER}/model3"
+    MODEL_FOLDER: str = f"{MODELS_FOLDER}/model7"
 
     # API
     API_PORT: int = 5000
