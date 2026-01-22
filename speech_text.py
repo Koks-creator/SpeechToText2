@@ -96,7 +96,7 @@ class SpeechToText:
     
     @log_call(logger=logger, log_params=[""], hide_res=False)
     @timeit(logger=logger)
-    def transcribe(self, audio_input: List[Union[str, bytes, BytesIO]], normalize: bool = False) -> str:
+    def transcribe(self, audio_input: List[Union[str, bytes, BytesIO]], normalize: bool = False) -> List[str]:
         # Get spectrograms
         spectrograms = []
         for audio_in in audio_input:
@@ -146,3 +146,4 @@ if __name__ == "__main__":
     text = speech_to_text.transcribe([audio_file, audio_file2, audio_file3, audio_file4, audio_file5])
 
     print(f"Wynik: {text}")
+
