@@ -153,3 +153,93 @@ Model was trained oc Google Colab with GPU, after 26 epochs training has been st
  ![alt text](assets/Figure_1.png)
 
  ![alt text](assets/Figure_2.png)
+
+
+## Configuration
+Configuration sits in the `config.py` file.
+
+The most important settings:
+
+#### Model
+ - FRAME_LENGTH: `int` - related to spectrogram, leave as is
+ - FRAME_STEP: `int` - related to spectrogram, leave as is
+ - FFT_LENGTH: `int` - related to spectrogram, leave as is
+ - MODEL_FOLDER: `str` - path to the model folder, should contant `.h5` model file and mappings files named: `char_to_num.pkl` and `num_to_char.pkl` 
+
+#### Web App
+ - WEB_APP_PORT: `int`
+ - WEB_APP_HOST: `str`
+ - WEB_APP_DEBUG: `bool`
+ - WEB_APP_LOG_FILE: `str`
+ - WEB_APP_TEMP_UPLOADS_FOLDER: `str`
+ - WEB_APP_FILES_LIFE_TIME: `int`
+ - WEB_APP_USE_SSL: `bool`
+ - WEB_APP_PROTOCOL: `str`
+ - WEB_APP_API_TIMEOUT: `int`
+
+#### API
+- API_PORT: `int`
+- API_HOST: `str`
+- API_LOG_FILE: `str`
+- MAX_IMAGE_FILES: `int`
+- API_MAX_FILE_SIZE_MB: `int`
+- API_PROTOCOL: `str`
+- API_ALLOWED_EXTENSIONS: `set`
+- API_CHECK_INTERVAL: `int`
+
+
+## TTS module
+TTS module sits in `speech_to_text.py` file.
+
+#### Class parameters
+- model_folder: `Union[str, Path]`
+- frame_length: `int` = Config.FRAME_LENGTH
+- frame_step: `int` = Config.FRAME_STEP
+- fft_length: `int` = Config.FFT_LENGTH
+
+#### On init
+On initialization, loads model and `num_to_char` mapping.
+#### Methods
+
+`load_and_process_audio` - loads audio input, which can be provided as: file path or bytes. Method has `normalize` option to make sure audio will be loaded in 16 kHz sample rate and it also allows you to read more file formats. Processing might take more time but it can be used to make sure everything is correct.
+
+**Parameters**
+- audio_input: `Union[str, bytes, BytesIO]`
+- target_sample_rate: `int` = 16000
+
+**Returns**
+
+Spectorgram as `np.ndarray`.
+
+
+`normalize_audio` - method for normalizing audio, handles more audio forms and loads it in 16 kHz sample rate.
+
+**Parameters**
+- audio_input: `Union[str, bytes, BytesIO]`
+- target_sample_rate: `int` = 16000
+
+**Returns**
+
+Audio as `np.ndarray`.
+
+
+`decode_prediction` - method used for decoding predictions, CTC decode and converting to text.
+
+**Parameters**
+- pred: `np.ndarray`
+
+**Returns**
+
+Single transcription as `str`.
+
+`transcribe` - main method for getting transcriptions, it handles multiple inputs.
+
+**Parameters**
+- audio_input: `List[Union[str, bytes, BytesIO]]`
+-  normalize: `bool` = False
+
+**Returns**
+
+All transcriptions as `List[str]`
+
+
