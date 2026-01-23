@@ -243,3 +243,43 @@ Single transcription as `str`.
 All transcriptions as `List[str]`
 
 
+## Api
+
+#### Routes
+ - **alive/**
+
+ - **health_check/**
+
+ - **get_text/** - main endpoint for getting transcriptions. <br> Example:
+   ```bash
+   curl -X 'POST' \
+   'http://127.0.0.1:5000/get_text?normalize=false' \
+   -H 'accept: application/json' \
+   -H 'Content-Type: multipart/form-data' \
+   -F 'files=@2843-152918-0023.flac;type=audio/flac'
+   ```
+
+   Result:
+   ```json
+   {
+      "result": [
+         "and the rapid pace afterwards had made it impossible to walk as fast the dogs could pull i was therefore following by the side of wisting sledge and chating with him suddenly i saw hansen's dogs shout ahead"
+      ]
+   }
+   ```
+
+#### Validators
+ - **validate_audio_file** - validates file extensions
+
+#### Models
+```python
+class STTResponse(BaseModel):
+    result: List[str]
+
+class HealthResponse(BaseModel):
+    status: str
+```
+
+
+## Webapp
+Cool web app, nice css and stuff - you can upload filees, copy results or download results in json, there is also logic for checking api connectivity as shown in the video :))))))))))))))))))) <br> I always neglect web app part in my docs and I am gonna do it once again - read code.
